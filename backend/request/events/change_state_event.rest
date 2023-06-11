@@ -1,0 +1,7 @@
+PUT http://localhost:3001/api/evento/8
+Content-Type: application/json
+
+{
+    "usuarioId": 10,
+    "estado": true
+}

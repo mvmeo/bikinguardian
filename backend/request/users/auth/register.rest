@@ -1,0 +1,13 @@
+POST http://localhost:3001/api/register
+Content-Type: application/json
+
+{
+    "admin": false,
+    "nombre": "Sasha",
+    "apellido": "Perez",
+    "correo": "juancito@gmail.com",
+    "password": "123456",
+    "rut": "12345678-9",
+    "grupoSanguineo": "O+",
+    "fechaNacimiento": "1990-01-01"
+}

@@ -1,0 +1,8 @@
+POST http://localhost:3001/api/eventos 
+Content-Type: application/json
+
+{
+    "usuarioId":10,
+    "titulo":"falseeeee",
+    "descripcion":"deberia tener false el evento"
+}
