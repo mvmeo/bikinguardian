@@ -16,6 +16,7 @@ export function EventProvider({ children }) {
     try {
       const res = await getEventsRequest();
       setEvents(res.data);
+      console.log(res.data)
     } catch (error) {
         console.log(error);
         }

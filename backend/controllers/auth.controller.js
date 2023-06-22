@@ -17,7 +17,6 @@ const pool = new Pool({
 
 export const register = async (req, res) => {
   const {
-    admin,
     nombre,
     apellido,
     correo,

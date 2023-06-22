@@ -14,6 +14,7 @@ const Events = () => {
         <div key={event.id}>
           <h2>{event.titulo}</h2>
           <p>{event.descripcion}</p>
+          
         </div>
       ))
     }

@@ -42,6 +42,7 @@ const Profile = () => {
         <Box>
           <p>RUT: {user.rut}</p>
           <p>Grupo sanguíneo: {user.grupoSanguineo}</p>
+          <p>Teléfono: {user.telefono}</p>
           <p>Nacimiento: {convertirFormatoFechaISO(user.fechaNacimiento)}</p>
         </Box>
       </div>
