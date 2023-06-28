@@ -3,11 +3,12 @@ Content-Type: application/json
 
 {
     "admin": false,
-    "nombre": "Sasha",
-    "apellido": "Perez",
-    "correo": "juancito@gmail.com",
+    "nombre": "Samuel",
+    "apellido": "Angulo",
+    "correo": "samuelricardo@gmail.com",
     "password": "123456",
-    "rut": "12345678-9",
+    "rut": "26022413-1",
     "grupoSanguineo": "O+",
-    "fechaNacimiento": "1990-01-01"
+    "telefono": "123456789",
+    "fechaNacimiento": "2001-05-09"
 }

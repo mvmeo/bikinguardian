@@ -1,27 +1,27 @@
 import { useForm } from "react-hook-form";
 import { useEvent } from "../context/EventContext";
 import { useAuth } from "../context/AuthContext";
+import { useUser } from "../context/UsersContext";
 import { useNotification } from "../context/NotificationContext";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-const CreateEvent = () => {
+const EditProfile = () => {
   const { register, handleSubmit } = useForm();
-  const { editEvent } = useEvent();
+  const { editProfile } = useUser();
   const { createNotification } = useNotification();
   const { user } = useAuth();
 
   const navigate = useNavigate();
-  const { id } = useParams();
   const onSubmit = handleSubmit((data) => {
-    data = { usuarioId: user.id, ...data };
+    
+    data = { ...data, id: user.id };
 
     console.log(data);
-    console.log(id);
-    editEvent(id, data);
+    editProfile(data);
     navigate("/profile");
     createNotification({
-      descripcion: `${user.nombre} ${user.apellido} ha editado un evento`,
+      descripcion: `${user.nombre} ${user.apellido} ha editado su perfil`,
       usuarioId: user.id,
     });
   });
@@ -45,33 +45,31 @@ const CreateEvent = () => {
             />
           </svg>
         </Link>
-        <h2 className="font-bold uppercase">Editar evento</h2>
+        <h2 className="font-bold uppercase">Editar perfil</h2>
       </div>
       <div className="flex justify-center mt-4">
-        <form
-          onSubmit={onSubmit}
-          className="flex flex-col md:w-2/3 w-full px-8 mx-auto space-y-4"
-        >
-          <input
-            className="p-4 rounded"
+        <form onSubmit={onSubmit} className="flex flex-col md:w-2/3 w-full px-8 mx-auto space-y-4">
+          <input className="p-4 rounded"
             type="text"
-            placeholder="Ingresa un nuevo titulo"
-            {...register("titulo", { required: true })}
+            placeholder="Ingresa un nuevo nombre"
+            {...register("nombre", { required: true })}
             autoFocus
           />
-          <textarea
-            className="p-4 rounded"
+          <input className="p-4 rounded"
             type="text"
-            placeholder="Ingresa un nueva descripcion"
-            {...register("descripcion", { required: true })}
+            placeholder="Ingresa un nuevo apellido"
+            {...register("apellido", { required: true })}
           />
-          <button className="bg-yellow-600 text-white p-4 uppercase">
-            Editar
-          </button>
+          <input className="p-4 rounded"
+            type="text"
+            placeholder="Ingresa un nuevo número de teléfono"
+            {...register("telefono", { required: true })}
+          />
+          <button className="bg-yellow-600 text-white p-4 uppercase">Editar</button>
         </form>
       </div>
     </div>
   );
 };
 
-export default CreateEvent;
+export default EditProfile;

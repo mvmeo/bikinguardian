@@ -1,0 +1,9 @@
+PATCH  http://localhost:3001/api/profile/14
+Content-Type: application/json
+
+{
+    "nombre":"samy",
+    "apellido":"angeles",
+    "telefono":"+5684838131"
+
+}

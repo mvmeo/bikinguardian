@@ -1,5 +1,5 @@
 import { createContext, useState, useContext } from "react";
-import { userRequest, userByIdRequest } from "../api/users";
+import { userRequest, editProfileRequest } from "../api/users";
 const UserContext = createContext();
 
 export const useUser = () => {
@@ -11,22 +11,29 @@ export const useUser = () => {
 };
 
 export function UserProvider({ children }) {
-  const [user, setUser] = useState([]);
+  const [user, setUser] = useState();
 
-  const getUserById = async (id) => {
+  const getUser = async (id) => {
     try {
-      const res = await userByIdRequest(id);
-      setUser(res.data);
+      const res = await userRequest(id);
+      console.log(JSON.stringify(res.data))
+      setUser(JSON.stringify(res.data));
     } catch (error) {
         console.log(error);
         }
   };
 
+  const editProfile = async (id, profile) => {
+    const res = await editProfileRequest(id, profile);
+  };
+
+
 
   return (
     <UserContext.Provider
       value={{
-        getUserById,
+        getUser,
+        editProfile,
         user,
       }}
     >

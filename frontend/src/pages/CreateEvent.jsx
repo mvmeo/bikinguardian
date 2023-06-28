@@ -3,6 +3,7 @@ import { useEvent } from "../context/EventContext";
 import { useAuth } from "../context/AuthContext";
 import { useNotification } from "../context/NotificationContext";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CreateEvent = () => {
   const { register, handleSubmit } = useForm();
@@ -10,8 +11,10 @@ const CreateEvent = () => {
   const { createNotification } = useNotification();
   const { user } = useAuth();
 
+  const navigate = useNavigate();
   const onSubmit = handleSubmit((data) => {
     data = { ...data, usuarioId: user.id };
+    navigate("/profile")
     createEvent(data);
     createNotification({
       descripcion: `${user.nombre} ${user.apellido} ha creado un evento`,
@@ -22,7 +25,7 @@ const CreateEvent = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="flex space-x-2">
-        <Link to="/panel">
+        <Link to="/profile">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"

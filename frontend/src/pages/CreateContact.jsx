@@ -3,15 +3,18 @@ import { useContact } from "../context/ContactContext";
 import { useAuth } from "../context/AuthContext";
 import { useNotification } from "../context/NotificationContext";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const CreateContact = () => {
   const { register, handleSubmit } = useForm();
   const { createContact } = useContact();
   const { createNotification } = useNotification();
   const { user } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = handleSubmit((data) => {
     data = { ...data, usuarioId: user.id };
+    navigate("/profile");
     createContact(data);
     createNotification({
       descripcion: `${user.nombre} ${user.apellido} ha añadido un nuevo contacto`,

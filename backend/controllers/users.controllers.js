@@ -9,35 +9,25 @@ const pool = new Pool({
   host: process.env.DB_HOST,
   database: process.env.DB_DATABASE,
   password: process.env.DB_PASS,
-  port: 5432,
+  port: 5432
 });
 
-export const getUsers = async (req, res) => {
-  pool.query(
-    "SELECT id, admin, nombre, apellido, correo, rut, grupo_sanguineo, fecha_nacimiento, telefono FROM usuarios ORDER BY id ASC",
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
 
-      res.status(200).json(results.rows); //devuelve un json con los usuarios
-    }
-  );
-};
-export const getUserById = (req, res) => {
-  const id = parseInt(req.params.id);
+// export const getUsers = async (req, res) => {
 
-  pool.query(
-    "SELECT id, admin, nombre, apellido, correo, rut, grupo_sanguineo, fecha_nacimiento, telefono FROM usuarios WHERE id = $1",
-    [id],
-    (error, results) => {
-      if (error) {
-        throw error;
-      }
-      res.status(200).json(results.rows);
-    }
-  );
-};
+//   await pool.query(
+//     "SELECT id, admin, nombre, apellido, correo, rut, grupo_sanguineo, fecha_nacimiento, telefono FROM usuarios ORDER BY id ASC",
+//     [id],
+//     (error, results) => {
+//       if (error) {
+//         throw error;
+//       }
+//       res.status(200).json(results.rows);
+//     }
+//   );
+// };
+
+
 export const updatePassword = (req, res) => {
   const id = parseInt(req.params.id);
   const { contraseña } = req.body;
@@ -55,12 +45,11 @@ export const updatePassword = (req, res) => {
 };
 
 export const editProfile = (req, res) => {
-  const id = parseInt(req.params.id);
-  const { nombre, apellido, correo, rut, grupo_sanguineo, fecha_nacimiento, telefono } = req.body;
+  const { id, nombre, apellido, telefono } = req.body;
 
   pool.query(
-    "UPDATE usuarios SET nombre = $1, apellido = $2, correo = $3, rut = $4, grupo_sanguineo = $5, fecha_nacimiento = $6, telefono = $7 WHERE id = $8",
-    [nombre, apellido, correo, rut, grupo_sanguineo, fecha_nacimiento, telefono, id],
+    "UPDATE usuarios SET nombre = $1, apellido = $2, telefono = $3 WHERE id = $4",
+    [nombre, apellido, telefono, id],
     (error, results) => {
       if (error) {
         throw error;
@@ -70,9 +59,9 @@ export const editProfile = (req, res) => {
   );
 };
 
-
 export default {
-  getUsers,
-  getUserById,
+  // getUsers,
+  // getUserById,
   updatePassword,
+  editProfile,
 };

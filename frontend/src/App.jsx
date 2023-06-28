@@ -13,6 +13,7 @@ import Notifications from "./pages/Notifications";
 import EditEvent from "./pages/EditEvent";
 import ChangePassword from "./pages/ChangePassword";
 import CreateContact from "./pages/CreateContact";
+import EditProfile from "./pages/EditProfile";
 
 import ProtectedRoute from "./ProtectedRoute";
 
@@ -26,9 +27,9 @@ const App = () => {
   return (
     <AuthProvider>
       <NotificationProvider>
-        <UserProvider>
-          <ContactProvider>
-            <EventProvider>
+        <ContactProvider>
+          <EventProvider>
+            <UserProvider>
               <BrowserRouter>
                 <Routes>
                   <Route path="/" element={<HomePage />}></Route>
@@ -46,6 +47,10 @@ const App = () => {
                   <Route element={<ProtectedRoute />}>
                     <Route path="/panel" element={<Panel />}></Route>
                     <Route path="/profile" element={<Profile />}></Route>
+                    <Route
+                      path="/edit-profile"
+                      element={<EditProfile />}
+                    ></Route>
                     <Route path="/events" element={<Events />}></Route>
                     <Route
                       path="/create-event"
@@ -70,9 +75,9 @@ const App = () => {
                   </Route>
                 </Routes>
               </BrowserRouter>
-            </EventProvider>
-          </ContactProvider>
-        </UserProvider>
+            </UserProvider>
+          </EventProvider>
+        </ContactProvider>
       </NotificationProvider>
     </AuthProvider>
   );

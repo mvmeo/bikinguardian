@@ -39,6 +39,10 @@ const Profile = () => {
   useEffect(() => {
     getEvents();
     getContacts();
+    const interval = setInterval(() => {
+      getEvents();
+    }, 5000);
+    return () => clearInterval(interval);
   }, []);
 
   // const handleDeleteAccount = (id) => {
@@ -122,7 +126,9 @@ const Profile = () => {
 
           <div className="lg:col-span-2 space-y-4">
             <div>
-              <h2 className="font-bold mb-2 uppercase">Contactos de emergencia</h2>
+              <h2 className="font-bold mb-2 uppercase">
+                Contactos de emergencia
+              </h2>
               {hayContactos ? (
                 <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4">
                   {contacts.map((contact) => {
@@ -185,22 +191,23 @@ const Profile = () => {
               <h2 className="font-bold mb-2 uppercase">Tus eventos</h2>
               {hayEventos ? (
                 <div className="grid md:grid-cols-2 gap-4">
-                  {events.map((event) => {
-                    if (event.usuario_id === user.id) {
-                      return (
-                        <Event
-                          key={event.id}
-                          id={event.id}
-                          userId={event.usuario_id}
-                          titulo={event.titulo}
-                          descripcion={event.descripcion}
-                          estado={event.estado}
-                        />
-                      );
-                    }
-                  })}
-                  <Link to="/create-event">
-                    <div className="bg-yellow-600 p-8 text-white rounded-lg  flex hover:bg-yellow-700">
+                  {events
+                    .filter((event) => event.usuario_id === user.id)
+                    .map((event) => (
+                      <Event
+                        key={event.id}
+                        id={event.id}
+                        userId={event.usuario_id}
+                        titulo={event.titulo}
+                        descripcion={event.descripcion}
+                        estado={event.estado}
+                      />
+                    ))}
+                  <Link
+                    to="/create-event"
+                    className="bg-yellow-600 p-8 text-white rounded-lg  flex hover:bg-yellow-700"
+                  >
+                    <div className="p-7">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
                         className="h-6 w-6 inline-block"

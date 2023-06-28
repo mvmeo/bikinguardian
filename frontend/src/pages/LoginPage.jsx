@@ -19,31 +19,47 @@ const RegisterPage = () => {
   }, [isAuthenticated]);
 
   return (
-    <div>
-      {loginErrors.map((error, index) => (
-        <p key={index}>{error}</p>
-      ))}
-      <form onSubmit={onSubmit}>
-        {errors.apellido && <span>El apellido es requerido</span>}
-        <input
-          type="email"
-          placeholder="Correo electrónico"
-          {...register("correo", { required: true })}
-        />
-        {errors.correo && <span>El correo electrónico es requerido</span>}
-        <input
-          type="password"
-          placeholder="Contraseña"
-          {...register("password", { required: true })}
-        />
-        {errors.password && <span>La contraseña es requerido</span>}
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="flex justify-center w-full ">
+        <form
+          onSubmit={onSubmit}
+          className="flex flex-col md:w-1/2 w-full px-8 mx-auto space-y-4"
+        >
+          
+        <h1 className="text-[50px] font-bold text-yellow-900">¡Hola de nuevo!</h1>
+          {errors.apellido && <span>El apellido es requerido</span>}
+          <input
+            className="p-4 rounded"
+            type="email"
+            placeholder="Correo electrónico"
+            {...register("correo", { required: true })}
+          />
+          {errors.correo && <span className="bg-red-500 p-3 text-white">El correo electrónico es requerido</span>}
+          <input
+            className="p-4 rounded"
+            type="password"
+            placeholder="Contraseña"
+            {...register("password", { required: true })}
+          />
+          {errors.password && <span className="bg-red-500 p-3 text-white">La contraseña es requerido</span>}
 
-        <button type="submit">Iniciar sesión</button>
-        <p>
-          ¿No tienes una cuenta?
-          <Link to="/register"> Regístrate</Link>
-        </p>
-      </form>
+          <button
+            className="bg-yellow-600 text-white p-4 uppercase"
+            type="submit"
+          >
+            Iniciar sesión
+          </button>
+          <p className="flex justify-center space-x-1 text-yellow-700">
+            <p>¿No tienes una cuenta?</p>
+            <Link to="/register"> Regístrate</Link>
+          </p>
+          {loginErrors.map((error, index) => (
+            <p key={index} className="bg-red-500 p-3 text-white">
+              {error}
+            </p>
+          ))}
+        </form>
+      </div>
     </div>
   );
 };
