@@ -1,7 +1,7 @@
-PUT http://localhost:3001/api/evento/8
+PUT http://localhost:3001/api/evento/18
 Content-Type: application/json
 
 {
-    "usuarioId": 10,
-    "estado": true
+    "usuarioId": 12,
+    "estado": false
 }

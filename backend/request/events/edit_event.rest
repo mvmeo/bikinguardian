@@ -1,0 +1,8 @@
+PATCH http://localhost:3001/api/evento/19
+Content-Type: application/json
+
+{
+    "usuarioId":11,
+    "titulo":"edooo2222",
+    "descripcion":"editadooooo"
+}

@@ -7,7 +7,7 @@ const Header = () => {
   return (
     <div className="flex justify-between">
       <div>¡Hola, {user.nombre}!</div>
-        <Link to="/" onClick={()=> logout()}>Cerrar sesión</Link>
+        <Link to="/" onClick={()=> logout()} className="hover:underline underline-offset-4">Cerrar sesión</Link>
     </div>
   );
 };

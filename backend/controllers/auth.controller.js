@@ -151,6 +151,108 @@ export const profile = (req, res) => {
   });
 };
 
+export const changePassword = async (req, res) => {
+  const {id, password, newPassword } = req.body;
+
+  try {
+    pool.query(
+      "SELECT * FROM usuarios WHERE id = $1",
+      [id],
+      async (error, results) => {
+        if (error) throw error;
+        
+        const isMatch = await bcrypt.compare(
+          password,
+          results.rows[0].passwordhash
+        );
+        if (!isMatch) {
+          return res.status(400).json({ message: "Contraseña incorrecta" });
+        }
+        
+        const passwordHash = await bcrypt.hash(newPassword, 10);
+        
+        pool.query(
+          "UPDATE usuarios SET passwordHash = $1 WHERE id = $2",
+          [passwordHash, id],
+          (error, results) => {
+            if (error) throw error;
+
+            res.status(200).json({ message: "Contraseña actualizada" });
+          }
+        );
+      }
+    );
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+export const deleteUser = (req, res) => {
+  const { id } = req.body;
+
+  pool.query("DELETE FROM usuarios WHERE id = $1", [id], (error, results) => {
+    if (error) throw error;
+
+    res.status(200).json({ message: "Usuario eliminado" });
+  });
+};
+
+export const recoveryPassword = async (req, res) => {
+  const { correo } = req.body;
+
+  try {
+    pool.query(
+      "SELECT * FROM usuarios WHERE correo = $1",
+      [correo],
+      async (error, results) => {
+        if (error) throw error;
+
+        if (results.rows.length === 0) {
+          return res.status(400).json({ message: "Usuario no encontrado" });
+        }
+
+        const newPassword = Math.random().toString(36).slice(-8);
+        const passwordHash = await bcrypt.hash(newPassword, 10);
+
+        pool.query(
+          "UPDATE usuarios SET passwordHash = $1 WHERE correo = $2",
+          [passwordHash, correo],
+          (error, results) => {
+            if (error) throw error;
+
+            const transporter = nodemailer.createTransport({
+              service: "gmail",
+              auth: {
+                user: process.env.EMAIL,
+                pass: process.env.PASSWORD,
+              },
+            });
+
+            const mailOptions = {
+              from: process.env.EMAIL,
+              to: correo,
+              subject: "Recuperación de contraseña",
+              text: `Su nueva contraseña es: ${newPassword}`,
+            };
+
+            transporter.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                console.log(error);
+              } else {
+                console.log("Email sent: " + info.response);
+              }
+            });
+
+            res.status(200).json({ message: "Contraseña actualizada" });
+          }
+        );
+      }
+    );
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
 export const verifyToken = (req, res) => {
   const { token } = req.cookies;
 

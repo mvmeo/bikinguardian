@@ -14,7 +14,7 @@ const pool = new Pool({
 
 export const getContacts = (req, res) => {
   pool.query(
-    "SELECT * FROM contacts ORDER BY id ASC",
+    "SELECT * FROM contactos ORDER BY id ASC",
     (error, results) => {
       if (error) {
         throw error;
@@ -27,7 +27,7 @@ export const createContact = (req, res) => {
   const { usuarioId, nombre, apellido, numeroTelefono } = req.body;
 
   pool.query(
-    "INSERT INTO contact (usuario_id, nombre, apellido, numero_telefono) VALUES ($1, $2, $3, $4) RETURNING *",
+    "INSERT INTO contactos (usuario_id, nombre, apellido, numero_telefono) VALUES ($1, $2, $3, $4) RETURNING *",
     [usuarioId, nombre, apellido, numeroTelefono],
     (error, results) => {
       if (error) {
@@ -41,7 +41,7 @@ export const createContact = (req, res) => {
 export const deleteContact = (req, res) => {
   const id = parseInt(req.params.id);
 
-  pool.query("DELETE FROM contact WHERE id = $1", [id], (error, results) => {
+  pool.query("DELETE FROM contactos WHERE id = $1", [id], (error, results) => {
     if (error) {
       throw error;
     }

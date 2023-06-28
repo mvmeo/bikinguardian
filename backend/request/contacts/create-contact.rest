@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/contactos
+Content-Type: application/json
+
+{
+    "usuarioId":14,
+    "nombre":"samuel",
+    "apellido":"angulo",
+    "numeroTelefono":"1234567890"
+}

@@ -1,0 +1,6 @@
+DELETE http://localhost:3001/api/delete/user/15
+Content-Type: application/json
+
+{
+    "id": 15
+}

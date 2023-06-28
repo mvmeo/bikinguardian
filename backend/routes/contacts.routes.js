@@ -9,9 +9,8 @@ import {
 
 const router = Router();
 
-router.get("/notificaciones", authRequired, getContacts);
-router.post("/notificaciones", authRequired, createContact);
-router.delete("/notificacion/:id", authRequired, deleteContact);
-router.get("/notificaciones/usuario/:id", authRequired, getContactsByUserId);
-
+router.get("/contactos", authRequired, getContacts);
+router.post("/contactos", authRequired, createContact);
+router.get("/contactos/usuario/:id", authRequired, getContactsByUserId);
+ 
 export default router;

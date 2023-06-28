@@ -1,20 +1,20 @@
 import { useForm } from "react-hook-form";
-import { useEvent } from "../context/EventContext";
+import { useContact } from "../context/ContactContext";
 import { useAuth } from "../context/AuthContext";
 import { useNotification } from "../context/NotificationContext";
 import { Link } from "react-router-dom";
 
-const CreateEvent = () => {
+const CreateContact = () => {
   const { register, handleSubmit } = useForm();
-  const { createEvent } = useEvent();
+  const { createContact } = useContact();
   const { createNotification } = useNotification();
   const { user } = useAuth();
 
   const onSubmit = handleSubmit((data) => {
     data = { ...data, usuarioId: user.id };
-    createEvent(data);
+    createContact(data);
     createNotification({
-      descripcion: `${user.nombre} ${user.apellido} ha creado un evento`,
+      descripcion: `${user.nombre} ${user.apellido} ha añadido un nuevo contacto`,
       usuarioId: user.id,
     });
   });
@@ -22,7 +22,7 @@ const CreateEvent = () => {
   return (
     <div className="container mx-auto p-4">
       <div className="flex space-x-2">
-        <Link to="/panel">
+        <Link to="/profile">
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -38,21 +38,26 @@ const CreateEvent = () => {
             />
           </svg>
         </Link>
-        <h2 className="font-bold uppercase">Crear evento</h2>
+        <h2 className="font-bold uppercase">Crear contacto</h2>
       </div>
       <div className="flex justify-center mt-4">
         <form onSubmit={onSubmit} className="flex flex-col md:w-2/3 w-full px-8 mx-auto space-y-4">
           <input className="p-4 rounded"
             type="text"
-            placeholder="Ingresa un título"
-            {...register("titulo", { required: true })}
+            placeholder="Ingresa el nombre"
+            {...register("nombre", { required: true })}
             autoFocus
           />
-          <textarea className="p-4 rounded"
-            rows="3"
-            placeholder="Ingresa una descripción"
-            {...register("descripcion", { required: true })}
-          ></textarea>
+          <input className="p-4 rounded"
+            type="text"
+            placeholder="Ingresa el apellido"
+            {...register("apellido", { required: true })}
+          />
+          <input className="p-4 rounded"
+            type="text"
+            placeholder="Ingresa el numero telefónico"
+            {...register("numeroTelefono", { required: true })}
+          />
           <button className="bg-emerald-600 text-white p-4 uppercase">Crear</button>
         </form>
       </div>
@@ -60,4 +65,4 @@ const CreateEvent = () => {
   );
 };
 
-export default CreateEvent;
+export default CreateContact;

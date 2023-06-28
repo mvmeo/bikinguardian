@@ -54,6 +54,23 @@ export const updatePassword = (req, res) => {
   );
 };
 
+export const editProfile = (req, res) => {
+  const id = parseInt(req.params.id);
+  const { nombre, apellido, correo, rut, grupo_sanguineo, fecha_nacimiento, telefono } = req.body;
+
+  pool.query(
+    "UPDATE usuarios SET nombre = $1, apellido = $2, correo = $3, rut = $4, grupo_sanguineo = $5, fecha_nacimiento = $6, telefono = $7 WHERE id = $8",
+    [nombre, apellido, correo, rut, grupo_sanguineo, fecha_nacimiento, telefono, id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res.status(200).send(`User's profile modified with ID: ${id}`);
+    }
+  );
+};
+
+
 export default {
   getUsers,
   getUserById,

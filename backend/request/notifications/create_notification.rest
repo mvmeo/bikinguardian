@@ -2,6 +2,6 @@ POST http://localhost:3001/api/notificaciones
 Content-Type: application/json
 
 {
-    "usuarioId":10,
-    "descripcion":"Se ha creado otro evento"
+    "usuarioId":12,
+    "descripcion":"ooootra noti"
 }

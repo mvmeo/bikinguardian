@@ -1,5 +1,5 @@
 import { createContext, useState, useContext, useEffect } from "react";
-import { registerRequest, loginRequest, verifyTokenRequest } from "../api/auth";
+import { registerRequest, loginRequest, verifyTokenRequest, deleteAccountRequest, changePasswordRequest } from "../api/auth";
 import Cookies from "js-cookie";
 
 export const AuthContext = createContext();
@@ -87,12 +87,36 @@ export const AuthProvider = ({ children }) => {
     checkLogin();
   }, []);
 
+  const deleteAccount = async (id) => {
+    try {
+      await deleteAccountRequest(id);
+      logout();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const changePassword = async (passwords) => {
+    try {
+      await changePasswordRequest(passwords);
+    } catch (error) {
+      console.log(error);
+      if (Array.isArray(error.response.data)) {
+        return setErrors(error.response.data);
+      }
+      setErrors([error.response.data.message]);
+    }
+  };
+
+
   return (
     <AuthContext.Provider
       value={{
         signup,
         signin,
         logout,
+        deleteAccount,
+        changePassword,
         loading,
         user,
         isAuthenticated,

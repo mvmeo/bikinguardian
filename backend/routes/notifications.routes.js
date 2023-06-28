@@ -15,3 +15,4 @@ router.delete("/notificacion/:id", authRequired, deleteNotification);
 router.delete("/notificaciones", authRequired, deleteNotifications);
 
 export default router;
+ 

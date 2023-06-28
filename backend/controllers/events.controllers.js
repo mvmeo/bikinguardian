@@ -27,7 +27,7 @@ export const getEventById = (req, res) => {
     if (error) {
       throw error;
     }
-    response.status(200).json(results.rows);
+    res.status(200).json(results.rows);
   });
 };
 export const getEventsByUserId = (req, res) => {
@@ -87,6 +87,27 @@ export const updateEvent = (req, res) => {
     }
   );
 };
+
+export const editEvent = (req, res) => {
+  const id = parseInt(req.params.id);
+  const { usuarioId, titulo, descripcion } = req.body;
+
+  pool.query(
+    "UPDATE eventos SET titulo = $1, descripcion = $2 WHERE usuario_id = $3 AND id = $4",
+    [titulo, descripcion, usuarioId, id],
+    (error, results) => {
+      if (error) {
+        throw error;
+      }
+      res
+        .status(200)
+        .send(
+          `Event's state modified with ID: ${id} and user ID: ${usuarioId}`
+        );
+    }
+  );
+};
+
 
 export default {
   getEvents,
